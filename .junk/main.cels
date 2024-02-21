@@ -1,0 +1,11 @@
+
+type = float;
+
+function qwer(type a)
+{
+	return a * a;
+}
+
+a = print(5);
+
+print(qwer(7.8));

@@ -1,0 +1,10 @@
+ 
+a = 67
+b = 78
+
+c = function(q, w)
+{
+	d = q * w;
+	return d;
+}
+

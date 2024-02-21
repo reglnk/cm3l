@@ -1,0 +1,25 @@
+
+types are divided into:
+1. runtime (e.g. int, float, MyClass, ...)
+2. compile-time (all runtime types plus the type `type` itself)
+
+======= runtime
+
+bool (1 byte)
+int (32 bits signed)
+uint (32 bits unsigned)
+long (64 bits signed)
+ulong (64 bits unsigned)
+float (32 bits ieee754)
+double (64 bits ieee754)
+
+======= ct
+
+all compile-time variables are declared with keyword 'constexpr'.
+
+float myvar = 7.8;
+constexpr type t = decltype(myvar);
+t myothervar = cast<t>(34);
+if (t == float) // (constexpr)true
+	print(1);
+else print(0);

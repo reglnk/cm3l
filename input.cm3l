@@ -1,0 +1,9 @@
+
+float yu = 78;
+float sel = yu;
+float qwer = sel;
+
+int foo = function(float arg) {
+	return arg * arg;
+};
+

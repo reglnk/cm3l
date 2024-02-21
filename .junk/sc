@@ -1,0 +1,38 @@
+Comment selected line 	Ctrl + D
+Uncomment selected line 	Ctrl + Shift + D
+Move row or selected lines up 	Ctrl + Shift + Up Arrow key
+Move row or selected lines down 	Ctrl + Shift + Down Arrow key
+Duplicate line up 	Ctrl + Alt + Up Arrow key
+Duplicate line down 	Ctrl + Alt + Down Arrow key
+Selected line indent right 	Tab
+Selected line indent left 	Shift + Tab
+Delete row 	Ctrl + K
+Toggle between Insert and Overwrite mode 	Insert
+Move the cursor one character to the left 	Left Arrow key
+Move the cursor one character to the right 	Right Arrow key
+Move the cursor up one line 	Up Arrow key
+Move the cursor down one line 	Down Arrow key
+Move the cursor up one page 	Page Up key
+Move the cursor down one page 	Page Down key
+Delete the character to the left of the cursor 	Backspace
+Move the cursor to the beginning of the line 	Home
+Move the cursor to the end of the line 	End
+Delete the character to the right of the cursor 	Delete
+Insert newline including leading characters of the current line which are not letters or numbers 	Shift + Enter
+Mark text one character to the left 	Shift + Left Arrow key
+Mark text one character to the right 	Shift + Right Arrow key
+Help 	F1
+What’s this? 	Shift + F1
+Find 	Ctrl + F
+Find Next 	F3
+Set a Bookmark 	Ctrl + B
+Copy the marked text to the clipboard 	Ctrl + C
+New document 	Ctrl + N
+Print 	Ctrl + P
+Quit – close active copy of the editor 	Ctrl + Q
+Replace 	Ctrl + R
+Save your file 	Ctrl + S
+Paste 	Ctrl + V
+Delete the marked text and copy it to the clipboard 	Ctrl + X
+Undo 	Ctrl + Z
+Redo 	Ctrl + Shift + Z

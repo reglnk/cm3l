@@ -1,0 +1,223 @@
+Token structures (including operators) and their precedence
+
+Glossary:
+RTL - right-to-left
+LTR - left-to-right
+VVN - valid variable name, the group of symbols separated with whitespace, meeting following requirements:
+- starts from latin uppercase or lowercase symbol
+- contains only latin uppercase or lowercase symbols and/or decimal digits.
+
+Basic types of token structures:
+<ref> - reference (RV or LV, doesn't matter) of some variable.
+<id> - direct statement of any VVN.
+<val> - type of any token structure that returns a value.
+
+Dependent types:
+<group> - with or without rounded brackets, comma as separator.
+<group:val>, <group:ref> - subtypes of <group>
+<seq> - with or without curly brackets, semicolon as separator.
+
+Syntax of description (not the operators):
+The <> brackets contain statement types.
+The | operator is interpreted as regular language 'or', placed inside <>. If nothing is placed between it
+and > symbol, then the whole part may be omitted.
+The -> operator is followed by
+  expression that shows type of return value of described token structure, or
+  nothing, if the described token structure doesn't return value.
+To describe the language syntax, all these things are escaped with \ written before each needed symbol.
+Each token group description line (TGDL) begins with | symbol.
+Joined contents of several subsequent TGDL are single TGDL.
+
+-- Precedence: lowest
+-- These conversions are added as needed, depending on other operators
+
+Direct reference
+| <id> -> <ref>
+example:
+| a
+
+Evaluation
+| <ref> -> <val>
+| <group:ref> -> <group:val>
+example:
+| a
+
+| int func(float h) { return h; }
+| func = int(float h) h;
+
+-- Precedence: 0 (highest)
+
+Nested reference
+| <id>::...::<id> -> <ref>
+examples:
+| foo::bar
+| foo::bar::m5759
+
+-- Precedence: 0.5
+
+(LTR) Inline function definition
+| <val><group:ref><seq|id> -> <val>
+examples:
+| int(float h) { return h }
+| int(float h) h
+| int(float foo, bool bar) { return foo + int:bar }
+
+-- Precedence: 1
+
+(LTR) Function call
+| <val><val|group> -> <val>
+examples:
+| somefn(1)
+| somefn()
+| somefn 12
+| somefn(foo, bar)
+
+(LTR) Postfix increment and decrement
+| <ref>++ -> <value>
+| <ref>-- -> <value>
+
+(LTR) Subscript
+| <value>[<value>] -> <ref>
+
+(LTR) Direct member access
+| <value>.<id> -> <ref>
+
+(LTR) Dereferencing member access
+| <value> \-\> <id> -> <ref>
+
+(LTR) Variable definition
+| <val><id> -> <ref>
+examples:
+| float foo
+| decltype(foo) bar
+
+-- Precedence: 2
+
+(RTL) Prefix increment and decrement
+| ++<ref> -> <ref>
+| --<ref> -> <ref>
+
+(RTL) Unary plus and minus
+| +<val> -> <val>
+| -<val> -> <val>
+
+(RTL) Logical NOT and bitwise NOT
+| !<val> -> <val>
+| ~<val> -> <val>
+
+(RTL) Type cast
+| <val> : <val> -> <val>
+examples:
+| float: 7
+| float: int: 3.14
+
+(RTL) Dereference
+| *<val> -> <val>
+
+(RTL) Taking address
+| &<val> -> <val>
+
+(RTL) Allocating objects
+| new <val> -> <val>
+| new [<val>] <val> -> <val>
+
+(RTL) Deleting objects
+| delete <val>
+
+-- Precedence: 3
+
+(LTR) Multiplication, division, remainder
+| <val> * <val> -> <val>
+| <val> / <val> -> <val>
+| <val> % <val> -> <val>
+
+-- Precedence: 4
+
+(LTR) Addition, substraction
+| <val> + <val> -> <val>
+| <val> - <val> -> <val>
+
+-- Precedence: 5
+
+(LTR) Bitwise shifts
+| <val> << <val> -> <val>
+| <val> >> <val> -> <val>
+
+-- Precedence: 6
+
+(LTR) Relational operators
+| <val> < <val> -> <val>
+| <val> > <val> -> <val>
+| <val> <= <val> -> <val>
+| <val> >= <val> -> <val>
+
+-- Precedence: 7
+
+(LTR) Equality operators
+| <val> == <val> -> <val>
+| <val> != <val> -> <val>
+
+-- Precedence: 8
+
+(LTR) Bitwise AND
+| <val> & <val> -> <val>
+
+-- Precedence: 9
+
+(LTR) Bitwise XOR
+| <val> ^ <val> -> <val>
+
+-- Precedence: 10
+
+(LTR) Bitwise OR
+| <val> | <val> -> <val>
+
+-- Precedence: 11
+
+(LTR) Logical AND
+| <val> && <val> -> <val>
+
+-- Precedence: 12
+
+(LTR) Logical OR
+| <val> || <val> -> <val>
+
+-- Precedence: 13
+
+(RTL) Assignment
+| <ref> = <val> -> <ref>
+
+(RTL) Compound assignment
+| <ref> += <val> -> <ref>
+| <ref> -= <val> -> <ref>
+| <ref> *= <val> -> <ref>
+| <ref> /= <val> -> <ref>
+| <ref> %= <val> -> <ref>
+| <ref> <<= <val> -> <ref>
+| <ref> >>= <val> -> <ref>
+| <ref> &= <val> -> <ref>
+| <ref> ^= <val> -> <ref>
+| <ref> |= <val> -> <ref>
+
+(RTL) Throw operator
+| throw <val>
+
+-- Precedence: 14
+
+(LTR) Grouping
+| <val>, <val>, ... -> <group:val>
+| (<val>, <val>, ...) -> <group:val>
+| <ref>, <ref>, ... -> <group:ref>
+| (<ref>, <ref>, ...) -> <group:ref>
+
+-- Precedence: 15
+
+(LTR) Sequence
+| <stat>; -> <seq>
+| <stat>; <stat>; ... -> <seq>
+| { <stat> } -> <seq>
+| { <stat>; <stat; ... } -> <seq>
+
+-- Precedence: 16
+(LTR) Variable definition
+| <

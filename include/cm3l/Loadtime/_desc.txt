@@ -1,0 +1,4 @@
+This directory contains code that directly relates to the stage of
+code loading and parsing (possibly also to later stages).
+
+Note that planned features for interpreter include loading and parsing code by executing code in runtime.

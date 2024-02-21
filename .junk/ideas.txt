@@ -1,0 +1,7 @@
+refst->data.complex.parts[i].[begin - end] is equivalent to refst->data.complex.parts[i].begin - refst->data.complex.parts[i].end
+but the refst->data.complex.parts[i] is saved as temporary variable
+the idea is that any "valid variable identifier" inside is treated as a field.
+also variables outside of the object can be added, but if there's none of fields, the parser throws an error.
+to force resolve name inside [] outside of the object, it's placed inside round brackets, like:
+mytable.obj.[begin + (localvar)];
+

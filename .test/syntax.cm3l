@@ -1,0 +1,57 @@
+require <libc/stdio>
+
+// definitions
+// assigned: changed value of some memory block by copying or moving an object.
+// so, previous object of the variable thats assigned new value, is disposed.
+//
+// unsafe code: dereferencing pointers, allocating and accessing raw memory.
+
+// default scope is 'safe'
+// so, 'new' operator assumes GC is watching the memory.
+// raw pointers can be defined and assigned, but the operations are very limited for them.
+
+// this scope isn't bound to any keyword.
+
+// inside default scope, 'unsafe" may be inserted. for example:
+// unsafe int *a = new int[200];
+// or
+// int *a = unsafe new int[200];
+// so, the 'new' operator behaviour is changed (works as in c++).
+// also, all statements that belong to unsafe block use
+// the same local scope as the block itself.
+
+// 'safeonly' has the same syntax as 'unsafe' and may appear inside 'unsafe', with
+// same behavior as it was placed inside default scope.
+// so, it forbids executing unsafe code that belongs to it. But, the 'unsafe' block
+// may be placed inside 'safeonly' and may contain unsafe code,
+// and no exception will be thrown until the unsafe code is actually executed in such case.
+
+
+int somefunc(float a) unsafe {
+	int res = *(int *)&a;
+	return res;
+}
+
+int otherfunc(float a) {
+	int res;
+
+	safeonly {
+		// no exception
+		res = a * 12;
+	}
+
+	try safeonly {
+		// throws UnsafeException
+		res += somefunc(a);
+	}
+	catch (Exception e)
+		return res;
+
+	// unreachable code
+	return res * 2;
+}
+
+int main()
+{
+	libc::printf("%d\n", otherfunc(3.141593f));
+}

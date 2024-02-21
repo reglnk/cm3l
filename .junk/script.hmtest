@@ -1,0 +1,58 @@
+echo off
+
+ins hello 123
+ins world 256
+ins worl 254
+ins wor 232
+ins wo 12
+ins worlds 524288
+ins worl 89
+
+i q 1 i w 2 i e 3 i r 4 i t 5 i y 6 i u 7 i i 8 i o 9 i p 0
+as q 1
+as w 2
+as e 3
+as r 4
+as t 5
+as y 6
+as u 7
+as i 8
+as o 9
+as p 0
+
+e w e r e y e i e p
+as q 1
+as w null
+as e 3
+as r null
+as t 5
+as y null
+as u 7
+as i null
+as o 9
+as p null
+
+e q e e e t e u e o
+as q null
+as w null
+as e null
+as r null
+as t null
+as y null
+as u null
+as i null
+as o null
+as p null
+
+as world 256 e world as world null
+
+as hello 123
+e hello as hello null
+e hello as hello null
+
+e world as world null
+
+as worl 89 e worl as worl null
+as wor 232 e wor as wor null
+as wo 12 e wo as wo null
+as worlds 524288 e worlds as worlds null

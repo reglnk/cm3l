@@ -1,0 +1,10 @@
+
+std::type a = 7;
+a = 8;
+std::type1 ns::a2 = 3;
+ns::a2 = a;
+
+ns::func foo = function(ns::int b) {
+	return b
+}
+

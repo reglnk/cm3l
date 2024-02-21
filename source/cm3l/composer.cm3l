@@ -1,0 +1,132 @@
+// this file is a piece of undocumented pseudocode meant to
+// have similarities with cm3l by syntax in future
+
+require lexer using;
+require parser using;
+require rttypes;
+require std;
+
+extern struct StatementNamePart;
+
+extern struct StatementBasicOper;
+extern struct StatementUnaryOper;
+
+// AssignOper, ValueOper
+extern struct StatementBinaryOper;
+
+extern struct StatementForLoop;
+extern struct StatementBranch;
+
+extern struct StatementVarDecl;
+extern struct StatementFunction;
+extern struct StatementInlineFunction;
+extern struct StatementFuncCall;
+
+extern struct StatementGrouping;
+extern struct StatementSequence;
+
+constexpr pseudo = object;
+
+struct NestedName {
+	vector<StatementNamePart> np;
+	pseudo flags; // is_absolute
+}
+
+// can store 1 token or
+// some mid-level structure (e.g. variable definition, nested name (foo::bar), ...
+struct TokenIntermediateRepr
+{
+	union {
+		// low-level =================
+		Token tok;
+
+		// mid-level =================
+		NestedName nname; // descriptor of name part such as "foo::bar" but capable of joining with other name parts
+
+		// high-level ================
+		Statement ref;
+
+		StatementBasicOper basic;
+		StatementUnaryOper unary;
+
+		// AssignOper, ValueOper
+		StatementBinaryOper binary;
+
+		StatementForLoop loop;
+		StatementBranch branch;
+
+		StatementVarDecl vardecl;
+		StatementFunction function;
+		StatementInlineFunction inline_fn;
+		StatementFuncCall call;
+
+		StatementGrouping group;
+		StatementSequence sequence;
+	}
+	data;
+	rttypes::union_typeinfo ti;
+
+	TokenIntermediateRepr() {
+		ti.init(this);
+	}
+	TokenIntermediateRepr(Token tok): () {
+		data.tok = tok;
+		ti.update(Token);
+	}
+	template<typename T>
+	TokenIntermediateRepr(T st): () {
+		ct_select_field<T>(data) = st;
+		ti.update(T);
+	}
+
+	bool operator is(rttypes::dynamic_type t) {
+		return ti.type == t;
+	}
+
+	void operator =(rttypes::dynamic_value v) {
+		assert(ti.type == rttypes::get_type(v));
+		ti.select_field() = v;
+	}
+	bool operator ==(rttypes::dynamic_value v) {
+		assert(ti.type == rttypes::get_type(v));
+		return ti.select_field() == v;
+	}
+
+	template<typename T>
+	static (T == TokenIntermediateRepr ? T : rttypes::dynamic_value) operator =(T &dest, TokenIntermediateRepr repr) {
+		dest = T == TokenIntermediateRepr ? this : ti.select_field();
+	}
+}
+
+// input: tokens
+// output: AST
+pseudo compose(pseudo input, pseudo output) {
+	pseudo inm = linked_list([TokenIntermediateRepr(v) for v in input.tokens]);
+
+	// after that, single :: tokens shouldn't appear anymore, only NamePart and NestedName
+	for i, v: std::iterator(inm) {
+		if v is Token {
+			// on success, 3 subsequent elements will be joined to 1
+			if v.type == ScopeResolution { // "::"
+				if (!i || i == inm.length) {
+					throw "bad :: operator usage";
+				}
+				bool check = inm[i - 1].type in [NamePart, NestedName] && inm[i + 1].type in [NamePart, NestedName];
+				if !check {throw;}
+				remove(inm[i]);
+				namepart_join(inm[i - 1], inm[i]);
+				i = i - 1; // values are shifted so don't skip
+			}
+		}
+	}
+
+	// then, convert all single NamePart tokens and NestedName to just Reference
+	for i, v: std::iterator(inm) {
+		if v is NamePart || v is NestedName {
+			v = Reference(v);
+		}
+	}
+
+	// then operators...
+}
+

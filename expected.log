@@ -1,0 +1,26 @@
+Abstract Syntax Tree ======================
+// new global scope
+operator =
+|>== <variable def> ref: 0,0
+  |>== <ref: 1,0 | nested> // unlinked
+|>== <ref: 2,0 | literal>
+operator =
+|>== <ref: 1,0>
+|>== <ref: 3,0 | literal>
+operator =
+|>== <variable def> ref: 4,0
+  |>== <ref: 5,0 | nested> // unlinked
+|>== <ref: 6,0 | literal>
+operator =
+|>== <ref: 4,0 | nested>
+|>== <ref: 1,0>
+operator =
+|>== <variable def> ref: 7,0
+  |>== <ref: 8,0 | nested> // unlinked
+|>== <function> // new inner scope
+  |>== <grouping>
+    |>== <variable def> ref: 0,1
+      |>== <ref: 9,0 | nested> // unlinked
+  |>== <sequence> len: 1 // new inner scope
+    |>== <unary oper return>
+      |>== <ref: 0,1>
