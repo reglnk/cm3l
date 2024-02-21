@@ -11,6 +11,6 @@ obj/
 *.vcxproj
 *.user
 
-*.sh
+# *.sh
 *.bat
 *.cmd
