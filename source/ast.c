@@ -1,5 +1,5 @@
 #include <cm3l/Lexer.h>
-#include <cm3l/Composer.h>
+#include <cm3l/Parser.h>
 #include <stdio.h>
 
 void indent(unsigned num)
@@ -26,8 +26,9 @@ static inline const char *operTypeToStr(cm3l_TokenData tdt)
 	}
 }
 
-void printStat(cm3l_ComposerData const *comp, cm3l_Statement const *st, unsigned r)
+void printStat(cm3l_ParserData const *comp, cm3l_Statement const *st, unsigned r)
 {
+	if (r > 20) return;
 	if (st->type == Stt_AssignOper)
 	{
 		cm3l_StatementBinaryOper *binopst = cm3l_VectorAtM(&comp->binOpers, st->index, cm3l_StatementBinaryOper);
@@ -62,7 +63,7 @@ void printStat(cm3l_ComposerData const *comp, cm3l_Statement const *st, unsigned
 	else if (st->type == Stt_VarDecl)
 	{
 		cm3l_StatementVarDecl *vdst = cm3l_VectorAtM(&comp->varDecls, st->index, cm3l_StatementVarDecl);
-		printf("<variable def>\n");
+		printf("<variable decl>\n");
 
 		cm3l_Statement refst = {
 			.container = (void *)&comp->references,
@@ -165,12 +166,12 @@ int main(int argc, char **argv)
 		return proc;
 	}
 
-	cm3l_ComposerData comp = cm3l_ComposerDataCreate();
-	unsigned comp_errcount = cm3l_Compose(&lex, &comp);
+	cm3l_ParserData comp = cm3l_ParserDataCreate();
+	unsigned comp_errcount = cm3l_ParserProcess(&lex, &comp);
 
 	if (comp_errcount)
 	{
-		printf("Composition error count: %u\n", comp_errcount);
+		printf("Parsing error count: %u\n", comp_errcount);
 		return 1;
 	}
 
@@ -182,4 +183,5 @@ int main(int argc, char **argv)
 		printStat(&comp, st, 0);
 	}
 	cm3l_LexerDataDestroy(&lex);
+	cm3l_ParserDataDestroy(&comp);
 }

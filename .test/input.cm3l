@@ -1,2 +1,3 @@
 
-func a = function() { return 2 } ;
+std::type1::sub ns::a2;
+

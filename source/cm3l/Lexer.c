@@ -148,6 +148,8 @@ static cm3l_TokenData s_controlCodes[CM3L_NUM_CONTROLS] =
 	Tdt_Control_ScopeEnd,
 	Tdt_Control_ParBeg,
 	Tdt_Control_ParEnd,
+	Tdt_Control_SbrkOpen,
+	Tdt_Control_SbrkClose,
 	Tdt_Control_If,
 	Tdt_Control_Else,
 	Tdt_Control_Break,

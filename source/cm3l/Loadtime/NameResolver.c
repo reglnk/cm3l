@@ -11,9 +11,9 @@ static size_t countSize(cm3l_StatementReference const *refst)
 {
 	size_t memsize = !!(refst->flags & cm3l_SttRefIsAbsolute);
 	if (refst->flags & cm3l_SttRefIsNested) {
-		const size_t len = refst->data.complex.length;
+		const size_t len = refst->data.nested.length;
 		for (size_t i = 0; i != len; ++i) {
-			cm3l_CodeSelectorPtr csel = refst->data.complex.parts[i];
+			cm3l_CodeSelectorPtr csel = refst->data.nested.parts[i];
 			memsize += (i + 1 != len) + csel.end - csel.begin;
 		}
 	} else {
@@ -32,9 +32,9 @@ size_t cm3l_RefStatToLinear(cm3l_StatementReference const *refst, char *buf)
 	if (refst->flags & cm3l_SttRefIsAbsolute)
 		*iter++ = '!';
 	if (refst->flags & cm3l_SttRefIsNested) {
-		const size_t len = refst->data.complex.length;
+		const size_t len = refst->data.nested.length;
 		for (size_t i = 0; i != len; ++i) {
-			cm3l_CodeSelectorPtr csel = refst->data.complex.parts[i];
+			cm3l_CodeSelectorPtr csel = refst->data.nested.parts[i];
 			memcpy(iter, csel.begin, csel.end - csel.begin);
 			iter += csel.end - csel.begin;
 			if (i + 1 != len)
@@ -50,7 +50,7 @@ size_t cm3l_RefStatToLinear(cm3l_StatementReference const *refst, char *buf)
 }
 
 int cm3l_ResolveReference (
-	cm3l_ComposerContext *ctx,
+	cm3l_ParserContext *ctx,
 	size_t refId,
 	int refType
 ) {

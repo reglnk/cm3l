@@ -1,7 +1,7 @@
 #ifndef CM3L_LOADTIME_NAME_RESOLVER
 #define CM3L_LOADTIME_NAME_RESOLVER
 
-#include <cm3l/Composer.h>
+#include <cm3l/Parser.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,7 +23,7 @@ size_t cm3l_RefStatToLinear(cm3l_StatementReference const *refst, char *buf);
 // 0: declaration
 // 1: link to existing variable
 int cm3l_ResolveReference (
-	cm3l_ComposerContext *ctx,
+	cm3l_ParserContext *ctx,
 	size_t refId,
 	int refType
 );

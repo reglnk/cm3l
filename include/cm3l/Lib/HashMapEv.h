@@ -49,6 +49,17 @@ void cm3l_HashMapEvClear(cm3l_HashMap *o);
 
 void cm3l_HashMapEvDestroy(cm3l_HashMap *o);
 
+#define cm3l_HashMapEv cm3l_HashMap // ok
+#define cm3l_HashMapEvCreate cm3l_HashMapCreate
+#define cm3l_HashMapEvInit cm3l_HashMapInit
+#define cm3l_HashMapIteratorEvCreate cm3l_HashMapIteratorCreate
+#define cm3l_HashMapEvNext cm3l_HashMapNext
+#define cm3l_HashMapEvExpand cm3l_HashMapExpand // ok
+#define cm3l_HashMapEvAccessBucket cm3l_HashMapAccessBucket
+#define cm3l_HashMapEvAccessHK cm3l_HashMapAccessHK
+#define cm3l_HashMapEvAccessK cm3l_HashMapAccessK
+#define cm3l_HashMapEvCountCollisions cm3l_HashMapCountCollisions // untested
+
 #ifdef __cplusplus
 }
 #endif

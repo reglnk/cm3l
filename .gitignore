@@ -2,15 +2,15 @@
 .vscode/
 .vs/
 .cache/
+.junk/
+.test/
 obj/
 
 .clangd
+.gdb*
 *.kdev4
 *.sln
 *.vcproj
 *.vcxproj
 *.user
 
-# *.sh
-*.bat
-*.cmd

@@ -91,11 +91,10 @@ typedef enum
 }
 cm3l_TokenData;
 
-inline uint32_t cm3l_getBinaryOperNumA(cm3l_TokenData oper)
+static inline int32_t cm3l_getBinaryOperNumA(cm3l_TokenData oper)
 {
 	switch (oper)
 	{
-		default:
 		case Tdt_Oper_Assign: return 0;
 		case Tdt_Oper_AddA: return 1;
 		case Tdt_Oper_SubA: return 2;
@@ -105,14 +104,15 @@ inline uint32_t cm3l_getBinaryOperNumA(cm3l_TokenData oper)
 		case Tdt_Oper_ShlA: return 6;
 		case Tdt_Oper_ShrA: return 7;
 		case Tdt_Oper_XorA: return 8;
+		default:
+			return -1;
 	}
 }
 
-inline uint32_t cm3l_getBinaryOperNumV(cm3l_TokenData oper)
+static inline int32_t cm3l_getBinaryOperNumV(cm3l_TokenData oper)
 {
 	switch (oper)
 	{
-		default:
 		case Tdt_Oper_IsEqual: return 0;
 		case Tdt_Oper_IsNEqual: return 1;
 		case Tdt_Oper_IsGreater: return 2;
@@ -132,6 +132,9 @@ inline uint32_t cm3l_getBinaryOperNumV(cm3l_TokenData oper)
 		case Tdt_Oper_Dot: return 14;
 		case Tdt_Oper_Colon: return 15;
 		case Tdt_Oper_Comma: return 16;
+
+		default:
+			return -1;
 	}
 }
 

@@ -77,6 +77,20 @@ static inline void cm3l_DLListPushBack(cm3l_DLList *self, const void *object, si
 
 cm3l_DLNode *cm3l_DLListGet(cm3l_DLList *self, size_t index);
 
+static inline cm3l_DLNode *cm3l_DLListNF (
+	cm3l_DLList *self,
+	cm3l_DLNode *node
+) {
+	return node != NULL ? node->next : self->first;
+}
+
+static inline cm3l_DLNode *cm3l_DLListPL (
+	cm3l_DLList *self,
+	cm3l_DLNode *node
+) {
+	return node != NULL ? node->prev : self->last;
+}
+
 static inline void cm3l_DLListInsertL (
 	cm3l_DLList *self,
 	cm3l_DLNode *node,
