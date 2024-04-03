@@ -1,5 +1,6 @@
 #include <cm3l/Lexer.h>
 #include <cm3l/Parser.h>
+#include <cm3l/Parser/NameResolver.h>
 #include <stdio.h>
 
 void indent(unsigned num)
@@ -41,6 +42,18 @@ void printStat(cm3l_ParserData const *comp, cm3l_Statement const *st, unsigned r
 		indent(r * 2); printf("|>== ");
 		printStat(comp, second, r + 1);
 	}
+	else if (st->type == Stt_MemberAccess)
+	{
+		cm3l_StatementMemberAccess *maccst = cm3l_VectorAtM(&comp->memberAccOpers, st->index, cm3l_StatementMemberAccess);
+		cm3l_Statement *obj = cm3l_VectorAtM(&comp->statements, maccst->obj, cm3l_Statement);
+
+		printf("member access: ");
+		for (char const *a = maccst->field.begin; a != maccst->field.end; ++a)
+			putchar(*a);
+		putchar('\n');
+		indent(r * 2); printf("|>== ");
+		printStat(comp, obj, r + 1);
+	}
 	else if (st->type == Stt_Reference)
 	{
 		cm3l_StatementReference *refst = cm3l_VectorAtM(&comp->references, st->index, cm3l_StatementReference);
@@ -58,7 +71,9 @@ void printStat(cm3l_ParserData const *comp, cm3l_Statement const *st, unsigned r
 		if (refst->flags & cm3l_SttRefIsAbsolute)
 			printf(" | absolute");
 
-		printf(">\n");
+		char buf[256];
+		size_t written = cm3l_RefStatToLinear(refst, buf);
+		printf("> %s\n", buf);
 	}
 	else if (st->type == Stt_VarDecl)
 	{

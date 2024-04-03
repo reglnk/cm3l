@@ -429,6 +429,26 @@ static int parseToken (lexerFlowData *flow)
 	const char *const beg = flow->token.beg;
 	flow->token.line = flow->line;
 
+	if (flow->token.type & Ttp_Oper)
+	{
+		const char *s;
+		for (s = beg + 1; s != flow->fileend; ++s)
+			if (!isOperChar(*s))
+				break;
+
+		for (int i = 0; i != CM3L_NUM_OPERATORS; ++i)
+		{
+			if (strCompare(s_operators[i], beg, s - beg))
+			{
+				flow->token.type = Ttp_Oper;
+				flow->token.data = s_opCodes[i];
+				flow->token.end = s;
+				flow->token.symbol = beg - flow->linebeg;
+				return 1;
+			}
+		}
+	}
+
 	if (flow->token.type & Ttp_Literal)
 	{
 		// guessing string literal
@@ -483,26 +503,6 @@ static int parseToken (lexerFlowData *flow)
 			flow->token.end = s;
 			flow->token.symbol = beg - flow->linebeg;
 			return 1;
-		}
-	}
-
-	if (flow->token.type & Ttp_Oper)
-	{
-		const char *s;
-		for (s = beg + 1; s != flow->fileend; ++s)
-			if (!isOperChar(*s))
-				break;
-
-		for (int i = 0; i != CM3L_NUM_OPERATORS; ++i)
-		{
-			if (strCompare(s_operators[i], beg, s - beg))
-			{
-				flow->token.type = Ttp_Oper;
-				flow->token.data = s_opCodes[i];
-				flow->token.end = s;
-				flow->token.symbol = beg - flow->linebeg;
-				return 1;
-			}
 		}
 	}
 

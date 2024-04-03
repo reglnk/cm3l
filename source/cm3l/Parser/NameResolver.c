@@ -1,4 +1,4 @@
-#include <cm3l/Loadtime/NameResolver.h>
+#include <cm3l/Parser/NameResolver.h>
 #include <cm3l/Lib/Memory.h>
 #include <cm3l/Lib/HashMapEv.h>
 

@@ -296,23 +296,6 @@ static inline void cm3l_ParserDataDestroy(cm3l_ParserData *pd)
 	cm3l_VectorDestroy(&pd->memberAccOpers);
 }
 
-typedef struct
-{
-	cm3l_LexerData const *inp;
-	cm3l_ParserData *outp;
-	unsigned int errcount;
-	unsigned int nesting;
-
-	// for internal Composer.c usage
-	cm3l_Vector /* cm3l_NameResolver */ vnameRes;
-
-	// cm3l_Vector /* imNamePart */ imNameParts;
-	cm3l_Vector /* imGrouping */ imGroups;
-	cm3l_Vector /* imSequence */ imSequences;
-	cm3l_DLList /* imCodeFragment */ fragments;
-}
-cm3l_ParserContext;
-
 int cm3l_IsAssignOper(cm3l_TokenData data);
 
 int cm3l_IsValueOper(cm3l_TokenData data);

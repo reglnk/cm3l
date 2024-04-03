@@ -1,18 +1,11 @@
 #ifndef CM3L_LOADTIME_NAME_RESOLVER
 #define CM3L_LOADTIME_NAME_RESOLVER
 
-#include <cm3l/Parser.h>
+#include <cm3l/Parser/Context.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-typedef struct
-{
-	cm3l_HashMap /* string, size_t */ scope;
-	size_t nextId;
-}
-cm3l_NameResolver;
 
 // returns the length of resulting string. If buf is NULL, the string is not written.
 size_t cm3l_RefStatToLinear(cm3l_StatementReference const *refst, char *buf);

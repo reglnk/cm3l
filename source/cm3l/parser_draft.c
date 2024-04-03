@@ -256,44 +256,44 @@ size_t processRange (
 // the reference algorithm (.next is short from node.next, as is .prev)
 // dots are used instead of ->
 /*
-node = first
-
-::loop::
-find :: as node
-if .next is not identifier then
-	return error
-end
-if .prev is not identifier then
-	is_absolute = true
-else
-	// rework
-end
-node = .next
-
-// rework
-// .prev.prev .prev is wrong
-create nested reference from .prev.prev, .prev (respect to is_absolute)
-place it at node
-delete .prev.prev, .prev
-iter = node
-
-::chk1::
-if iter.next and iter.next is not :: then
-	goto finish
-end
-if iter.next.next is not identifier then
-	return error
-end
-append iter.next.next to reference
-delete iter.next.next
-delete iter.next
-goto chk1
-
-::finish::
-place nested reference into node
-node = .next
-goto loop
-*/
+ * node = first
+ *
+ * ::loop::
+ * find :: as node
+ * if .next is not identifier then
+ *	return error
+ * end
+ * if .prev is not identifier then
+ *	is_absolute = true
+ * else
+ *	// rework
+ * end
+ * node = .next
+ *
+ * // rework
+ * // .prev.prev .prev is wrong
+ * create nested reference from .prev.prev, .prev (respect to is_absolute)
+ * place it at node
+ * delete .prev.prev, .prev
+ * iter = node
+ *
+ * ::chk1::
+ * if iter.next and iter.next is not :: then
+ *	goto finish
+ * end
+ * if iter.next.next is not identifier then
+ *	return error
+ * end
+ * append iter.next.next to reference
+ * delete iter.next.next
+ * delete iter.next
+ * goto chk1
+ *
+ * ::finish::
+ * place nested reference into node
+ * node = .next
+ * goto loop
+ */
 size_t processScopeRes(cm3l_ParserContext *ctx)
 {
 	cm3l_DLNode *node = ctx->fragments.first;
@@ -575,40 +575,40 @@ typedef struct
 imFinalData;
 
 static inline imFinalData convertType(imFragType tp) {
-switch (tp)
-{
-	case finalReference:
-		return (imFinalData) {Stt_Reference, offsetof(cm3l_ParserData, references)};
-	case finalVarDecl:
-		return (imFinalData) {Stt_VarDecl, offsetof(cm3l_ParserData, varDecls)};
-	case finalBasicOper:
-		return (imFinalData) {Stt_BasicOper, offsetof(cm3l_ParserData, basicOpers)};
-	case finalUnaryOper:
-		return (imFinalData) {Stt_UnaryOper, offsetof(cm3l_ParserData, unaryOpers)};
-	case finalAssignOper:
-		return (imFinalData) {Stt_AssignOper, offsetof(cm3l_ParserData, binOpers)};
-	case finalValueOper:
-		return (imFinalData) {Stt_ValueOper, offsetof(cm3l_ParserData, binOpers)};
-	case finalForLoop:
-		return (imFinalData) {Stt_ForLoop, offsetof(cm3l_ParserData, forLoops)};
-	case finalBranch:
-		return (imFinalData) {Stt_Branch, offsetof(cm3l_ParserData, branches)};
-	case finalFunction:
-		return (imFinalData) {Stt_Function, offsetof(cm3l_ParserData, functions)};
-	case finalInlineFunction:
-		return (imFinalData) {Stt_InlineFunction, offsetof(cm3l_ParserData, inlineFns)};
-	case finalMemberAccess:
-		return (imFinalData) {Stt_MemberAccess, offsetof(cm3l_ParserData, memberAccOpers)};
-	case finalSubscript:
-		return (imFinalData) {Stt_Subscript, offsetof(cm3l_ParserData, subscriptOpers)};
-	case finalFuncCall:
-		return (imFinalData) {Stt_FuncCall, offsetof(cm3l_ParserData, fnCalls)};
-	case finalGrouping:
-		return (imFinalData) {Stt_Grouping, offsetof(cm3l_ParserData, groups)};
-	case finalSequence:
-		return (imFinalData) {Stt_Sequence, offsetof(cm3l_ParserData, sequences)};
-	default:
-		return (imFinalData) {Stt_Undefined, 0};
+	switch (tp)
+	{
+		case finalReference:
+			return (imFinalData) {Stt_Reference, offsetof(cm3l_ParserData, references)};
+		case finalVarDecl:
+			return (imFinalData) {Stt_VarDecl, offsetof(cm3l_ParserData, varDecls)};
+		case finalBasicOper:
+			return (imFinalData) {Stt_BasicOper, offsetof(cm3l_ParserData, basicOpers)};
+		case finalUnaryOper:
+			return (imFinalData) {Stt_UnaryOper, offsetof(cm3l_ParserData, unaryOpers)};
+		case finalAssignOper:
+			return (imFinalData) {Stt_AssignOper, offsetof(cm3l_ParserData, binOpers)};
+		case finalValueOper:
+			return (imFinalData) {Stt_ValueOper, offsetof(cm3l_ParserData, binOpers)};
+		case finalForLoop:
+			return (imFinalData) {Stt_ForLoop, offsetof(cm3l_ParserData, forLoops)};
+		case finalBranch:
+			return (imFinalData) {Stt_Branch, offsetof(cm3l_ParserData, branches)};
+		case finalFunction:
+			return (imFinalData) {Stt_Function, offsetof(cm3l_ParserData, functions)};
+		case finalInlineFunction:
+			return (imFinalData) {Stt_InlineFunction, offsetof(cm3l_ParserData, inlineFns)};
+		case finalMemberAccess:
+			return (imFinalData) {Stt_MemberAccess, offsetof(cm3l_ParserData, memberAccOpers)};
+		case finalSubscript:
+			return (imFinalData) {Stt_Subscript, offsetof(cm3l_ParserData, subscriptOpers)};
+		case finalFuncCall:
+			return (imFinalData) {Stt_FuncCall, offsetof(cm3l_ParserData, fnCalls)};
+		case finalGrouping:
+			return (imFinalData) {Stt_Grouping, offsetof(cm3l_ParserData, groups)};
+		case finalSequence:
+			return (imFinalData) {Stt_Sequence, offsetof(cm3l_ParserData, sequences)};
+		default:
+			return (imFinalData) {Stt_Undefined, 0};
 }}
 
 // must be one of underlying final forms
@@ -944,9 +944,9 @@ size_t processStage16 (
 	cm3l_DLNode *next = node->next;
 	cm3l_DLNode *prev = node->prev;
 	for (;
-		node != NULL && end != (next = node->next);
-		prev = node,
-		node = next
+			node != NULL && end != (next = node->next);
+	prev = node,
+	node = next
 	) {
 		imCodeFragment *frag = (void *)node->data;
 		cm3l_Token *tk = imGetValue(ctx, frag);
@@ -979,7 +979,7 @@ static void finalizeAll(cm3l_ParserContext *ctx)
 {
 	for (
 		cm3l_DLNode *iter = ctx->fragments.first;
-		iter != NULL;
+	iter != NULL;
 	) {
 		imCodeFragment *frag = (void *)iter->data;
 		if (frag->type == rawToken)
@@ -1036,7 +1036,7 @@ void wrapAllStatements (cm3l_ParserContext *ctx)
 {
 	for (
 		cm3l_DLNode *iter = ctx->fragments.first;
-		iter != NULL;
+	iter != NULL;
 	) {
 		imCodeFragment *frag = (void *)iter->data;
 		assert(frag->type == finalStatement);
@@ -1108,3 +1108,170 @@ unsigned cm3l_ParserProcess(cm3l_LexerData const *inp, cm3l_ParserData *outp)
 	cm3l_DLListDestroy(&ctx.fragments);
 	return 0;
 }
+
+// statement: ref ref --> vardecl
+
+typedef unsigned char (*fnMatchFragment)(imCodeFragment *frag);
+typedef void (*fnMatchCallback)(im)
+
+// todo enum inh r t n e
+
+typedef enum grFlags
+{
+	grRaw = 0,
+
+/*
+	if not grSequence then
+		if grRepeat then
+			.mtmin is used
+			.mtmax is used
+			.rawtype is used
+			.matchfunc is used
+			.acceptor.vec is filled with matched results and has type <cm3l_DLNode *>
+		else
+			.rawtype is used
+			.matchfunc is used
+			.acceptor.node contains one matched result
+		end
+	else
+		.seq should be filled with grNodes describing the structure
+		if not grRepeat then
+			each element of .seq is modified (.acceptor.vec or .acceptor.node)
+		else
+			.mtmin is used
+			.mtmax is used
+			for each fully matched sequence (.seq) do
+				each element of .seq is modified (.acceptor.vec or .acceptor.node)
+				.acceptor.mtcallback(seq, smth...)
+				// the match callback may be called BEFORE it's known whether
+				// minimal matches are done or not (if .mtmin > 1)
+			end
+		end
+	end
+*/
+	grSequence = 1,
+
+	// the structure described by the grammar node should be parsed repeatedly
+	// minimum matches: .mtmin
+	// max matches: .mtmax; if 0 then considered unlimited
+	// optional element is described by setting .mtmin to 0 and .mtmax to 1
+	grRepeat = 2,
+}
+grFlags;
+
+// grRepeat
+// структура описывается однажды но может быть повторена
+// все результаты сохраняются в вектор DLNode's, пофиг внутри структуры он или снаружи
+// причем результаты содержат узлы и являются узлами (DLNodes)
+// .acc.node используется. каждый раз вызывается колбек
+
+// grSequence
+// вектор of grNode (желательно встроенный) содержит ссылки на другие grNode's в которые парсится структура
+// .acc.node .acc.vec не используются
+
+typedef struct grNode
+{
+	grFlags flags;
+
+	// describes raw token or intermediate or final statement
+	imFragType rawtype;
+
+	int mtmin; // minimal matches count
+	int mtmax; // maximal matches count
+
+	union {
+		cm3l_DLNode *acceptor;
+
+		// the template sequence
+		cm3l_Vector /* grNode */ *seq;
+	}
+	meta;
+	fnMatchFragment matchfunc;
+}
+grNode;
+
+typedef struct dlNodePair {
+	cm3l_DLNode *first;
+	cm3l_DLNode *second;
+}
+dlNodePair;
+
+// Matches a sequence of grammar nodes in the range limited by (pair).
+// If the sequence matches, 0 is returned and (pair) is changed.
+// After change:
+//   pair->first is the same or further from first node
+//   pair->second is the same or nearer to the first node
+// If the sequence doesn't match, non-zero is returned.
+int match (
+	cm3l_ParserContext *ctx,
+	cm3l_Vector /* grNode */ *seq,
+	dlNodePair *pair
+) {
+	cm3l_DLNode *flow_begin = pair->first;
+	grNode *iter = seq->data;
+	assert(flow_begin != NULL);
+	assert(seq->length);
+
+	for (size_t i = 0; i != seq->length; ++i)
+	{
+		if (flow_begin == NULL)
+			return 1;
+
+		imFragType tp = iter[i].type;
+		cm3l_DLNode *ni = flow_begin;
+		iter[i].node = NULL;
+
+		for (;; ni = ni->next)
+		{
+			imCodeFragment *frag = (void*)ni->data;
+			if (frag->type == tp) {
+				fnMatchFragment func = iter[i].matchfunc;
+				if (func == NULL || func(frag))
+					iter[i].node = ni;
+				break;
+			}
+			if (ni == pair->second)
+				break;
+		}
+		if (iter[i].node == NULL && !iter[i].optional)
+			return 1;
+
+		flow_begin = ni->next;
+	}
+
+	pair->first = iter[0].node;
+	pair->second = iter[seq->length - 1].node;
+	return 0;
+}
+
+/*
+ *
+grnode a = optional(grnode(::))
+grnode b = grnode(id)
+
+grnode cc = array(grnode(::), grnode(id))
+grnode c = array(cc, 1, -1);
+
+grnode ccc = range(a, b, c);
+match(ctx, ccc)
+
+*/
+// ============================================
+
+// [ :: ] id { :: id }*N ; N > 0
+
+// ::foo::bar
+// foo::bar
+// bar
+// ::bar
+
+grNode root = {
+	.flags = grSequence,
+	.
+};
+
+// stretch(&pair, 2);
+// grNode *it1 =
+// 	for k, v in fragments do
+// 		if
+
